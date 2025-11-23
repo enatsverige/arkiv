@@ -1,97 +1,88 @@
 <!DOCTYPE html>
 <html lang="sv">
 <head>
-<meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Textarkiv</title>
-<style>
-    body {
-        margin: 0;
-        font-family: Arial, sans-serif;
-        background-color: #003578;
-        color: #ffc200;
-    }
-    header {
-        padding: 20px;
-        text-align: center;
-        background-color: #00275c;
-    }
-    #searchBar {
-        width: 80%;
-        padding: 10px;
-        font-size: 16px;
-        border: none;
-        border-radius: 5px;
-    }
-    .archive-container {
-        padding: 20px;
-        max-width: 800px;
-        margin: auto;
-    }
-    .entry {
-        background-color: #00275c;
-        margin-bottom: 20px;
-        padding: 15px;
-        border-radius: 8px;
-    }
-    .entry h2 {
-        margin: 0 0 10px 0;
-    }
-    .entry p {
-        margin: 0 0 10px 0;
-    }
-    .date-box {
-        font-size: 12px;
-        color: #ffe066;
-        background-color: #001f3f;
-        padding: 5px 10px;
-        border-radius: 5px;
-        display: inline-block;
-    }
-</style>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Textarkiv</title>
+    <style>
+        body {
+            background-color: #003578;
+            color: #ffc200;
+            font-family: Arial, sans-serif;
+            margin: 0;
+            padding: 20px;
+        }
+        #search {
+            width: 100%;
+            padding: 10px;
+            margin-bottom: 20px;
+            background-color: #003578;
+            color: #ffc200;
+            border: 1px solid #ffc200;
+            box-sizing: border-box;
+        }
+        .post {
+            margin-bottom: 40px;
+            padding: 20px;
+            border: 1px solid #ffc200;
+            border-radius: 5px;
+        }
+        .title {
+            font-size: 24px;
+            margin-bottom: 10px;
+        }
+        .date-box {
+            display: inline-block;
+            padding: 5px 10px;
+            border: 1px solid #ffc200;
+            margin-bottom: 10px;
+            font-size: 14px;
+        }
+        .content {
+            font-size: 16px;
+        }
+    </style>
 </head>
 <body>
+    <input type="text" id="search" onkeyup="searchFunction()" placeholder="Sök efter texter...">
 
-<header>
-    <input type="text" id="searchBar" placeholder="Sök i arkivet...">
-</header>
+    <div id="archive">
+        <div class="post">
+            <div class="title">Titel 1: En intressant historia</div>
+            <div class="date-box">2023-05-15</div>
+            <div class="content">Detta är en längre text under titeln. Här kan du skriva vad som helst om ämnet. Texten kan vara hur lång som helst och sidan kommer att scrolla neråt om det behövs. Detta är exempeltext för att demonstrera strukturen.</div>
+        </div>
 
-<div class="archive-container" id="archive">
-    <div class="entry">
-        <h2>Titel 1</h2>
-        <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Morbi euismod.</p>
-        <div class="date-box">2025-11-23</div>
+        <div class="post">
+            <div class="title">Titel 2: Ett annat ämne</div>
+            <div class="date-box">2024-01-20</div>
+            <div class="content">Här är en annan längre text. Den beskriver något annat. Du kan söka på nyckelord i titeln eller texten för att filtrera resultaten. Exempel: Sök på 'ämne' för att hitta denna post.</div>
+        </div>
+
+        <div class="post">
+            <div class="title">Titel 3: Ytterligare en text</div>
+            <div class="date-box">2025-11-23</div>
+            <div class="content">Detta är den tredje exempeltexten. Den är längre för att visa hur scrollning fungerar. Lägg till fler poster här om du vill utöka arkivet. Sökfunktionen kommer att dölja poster som inte matchar sökningen.</div>
+        </div>
     </div>
-    <div class="entry">
-        <h2>Titel 2</h2>
-        <p>Curabitur tincidunt, urna non bibendum scelerisque, sapien sem tincidunt.</p>
-        <div class="date-box">2025-11-22</div>
-    </div>
-    <div class="entry">
-        <h2>Titel 3</h2>
-        <p>Vestibulum ante ipsum primis in faucibus orci luctus et ultrices posuere cubilia Curae.</p>
-        <div class="date-box">2025-11-21</div>
-    </div>
-</div>
 
-<script>
-    const searchBar = document.getElementById('searchBar');
-    const entries = document.querySelectorAll('.entry');
-
-    searchBar.addEventListener('input', function() {
-        const query = this.value.toLowerCase();
-        entries.forEach(entry => {
-            const title = entry.querySelector('h2').textContent.toLowerCase();
-            const text = entry.querySelector('p').textContent.toLowerCase();
-            const date = entry.querySelector('.date-box').textContent.toLowerCase();
-            if (title.includes(query) || text.includes(query) || date.includes(query)) {
-                entry.style.display = '';
-            } else {
-                entry.style.display = 'none';
+    <script>
+        function searchFunction() {
+            var input, filter, archive, posts, i, title, content;
+            input = document.getElementById("search");
+            filter = input.value.toUpperCase();
+            archive = document.getElementById("archive");
+            posts = archive.getElementsByClassName("post");
+            for (i = 0; i < posts.length; i++) {
+                title = posts[i].getElementsByClassName("title")[0].textContent.toUpperCase();
+                content = posts[i].getElementsByClassName("content")[0].textContent.toUpperCase();
+                if (title.indexOf(filter) > -1 || content.indexOf(filter) > -1) {
+                    posts[i].style.display = "";
+                } else {
+                    posts[i].style.display = "none";
+                }
             }
-        });
-    });
-</script>
-
+        }
+    </script>
 </body>
 </html>
